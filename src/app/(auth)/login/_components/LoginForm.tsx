@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
 import { GithubIcon, Loader2Icon, SendIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { startTransition, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export default function LoginForm() {

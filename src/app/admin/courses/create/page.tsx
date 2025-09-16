@@ -35,13 +35,20 @@ import {
   courseStatus,
 } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, PlusIcon, SparkleIcon } from "lucide-react";
+import { ArrowLeft, LoaderIcon, PlusIcon, SparkleIcon } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import slugify from "slugify";
 import { CreateCourse } from "./actions";
+import { useTransition } from "react";
+import { tryCatch } from "@/hooks/try-catch";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function CourseCreationPage() {
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+
   const form = useForm<CourseSchemaType>({
     resolver: zodResolver(courseSchema),
     defaultValues: {
@@ -59,7 +66,23 @@ export default function CourseCreationPage() {
   });
 
   function onSubmit(values: CourseSchemaType) {
-    console.log(values);
+    startTransition(async () => {
+      const { data: result, error } = await tryCatch(CreateCourse(values));
+
+      if (error) {
+        toast.error("An unexpected error occurred. Please try again.");
+        return;
+      }
+
+      if (result.status === "success") {
+        toast.success(result.message);
+
+        form.reset();
+        router.push("/admin/courses");
+      } else if (result.status === "error") {
+        toast.error(result.message);
+      }
+    });
   }
 
   return (
@@ -240,7 +263,17 @@ export default function CourseCreationPage() {
                     <FormItem className="grow">
                       <FormLabel>Duration (hours)</FormLabel>
                       <FormControl>
-                        <Input type="number" {...field} />
+                        <Input
+                          type="number"
+                          {...field}
+                          value={field.value ?? ""}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            field.onChange(
+                              value === "" ? undefined : Number(value)
+                            );
+                          }}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -258,6 +291,13 @@ export default function CourseCreationPage() {
                           type="number"
                           {...field}
                           placeholder="Price..."
+                          value={field.value ?? ""}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            field.onChange(
+                              value === "" ? undefined : Number(value)
+                            );
+                          }}
                         />
                       </FormControl>
                       <FormMessage />
@@ -294,9 +334,18 @@ export default function CourseCreationPage() {
                 )}
               />
 
-              <Button type="submit">
-                <PlusIcon className="size-4" />
-                Create Course
+              <Button type="submit" disabled={isPending}>
+                {isPending ? (
+                  <>
+                    Creating...
+                    <LoaderIcon className="animate-spin" />
+                  </>
+                ) : (
+                  <>
+                    <PlusIcon className="size-4" />
+                    Create Course
+                  </>
+                )}
               </Button>
             </form>
           </Form>

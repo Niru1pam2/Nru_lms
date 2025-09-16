@@ -5,6 +5,7 @@ import { PrismaClient } from "@/generated/prisma";
 import { env } from "./env";
 import { emailOTP } from "better-auth/plugins";
 import { resend } from "./resend";
+import { admin } from "better-auth/plugins";
 
 const prisma = new PrismaClient();
 export const auth = betterAuth({
@@ -28,5 +29,6 @@ export const auth = betterAuth({
         });
       },
     }),
+    admin(),
   ],
 });

@@ -1,6 +1,6 @@
 "use server";
 
-import { adminGetCourses } from "@/app/data/admin/admin-get-course";
+import { adminGetCourses } from "@/app/data/admin/admin-get-courses";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import AdminCourseCard from "./_components/AdminCourseCard";

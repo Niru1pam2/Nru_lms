@@ -1,4 +1,4 @@
-import { AdminCourseType } from "@/app/data/admin/admin-get-course";
+import { AdminCoursesType } from "@/app/data/admin/admin-get-courses";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -22,7 +22,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface AdminCourseCardProps {
-  data: AdminCourseType;
+  data: AdminCoursesType;
 }
 
 export default function AdminCourseCard({ data }: AdminCourseCardProps) {

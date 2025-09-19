@@ -51,7 +51,7 @@ export default async function EditRoute({ params }: EditRouteProps) {
                 Here you can update your Course Structure
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-8">
               <CourseStructure data={data} />
             </CardContent>
           </Card>

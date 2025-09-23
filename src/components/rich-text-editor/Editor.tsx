@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import TextAlign from "@tiptap/extension-text-align";
@@ -24,7 +25,13 @@ export default function RichTextEditor({ field }: { field: any }) {
       field.onChange(JSON.stringify(editor.getJSON()));
     },
 
-    content: field.value ? JSON.parse(field.value) : "<p>Hello world</p>",
+    content: (() => {
+      try {
+        return field.value ? JSON.parse(field.value) : "<p>Hello world</p>";
+      } catch (error) {
+        return field.value || "<p>Hello world</p>";
+      }
+    })(),
 
     immediatelyRender: false,
   });
@@ -35,5 +42,3 @@ export default function RichTextEditor({ field }: { field: any }) {
     </div>
   );
 }
-
-//6:16

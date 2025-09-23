@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { cn } from "@/lib/utils";
 import { Loader2, Trash2 } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
@@ -16,6 +17,7 @@ interface Uploader {
 
 export default function Uploader({ value, onChange }: Uploader) {
   const [preview, setPreview] = useState<string | null>(value ?? null);
+  const [mimeType, setMimeType] = useState<string | null>(null);
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [deleting, setDeleting] = useState<boolean>(false);
@@ -43,8 +45,9 @@ export default function Uploader({ value, onChange }: Uploader) {
         }
 
         setPreview(url);
+        setMimeType(file.type); // store file type (image/* or video/*)
         onChange(url);
-      } catch (err) {
+      } catch {
         toast.error("Upload failed");
         setError(true);
       } finally {
@@ -64,9 +67,10 @@ export default function Uploader({ value, onChange }: Uploader) {
       });
 
       setPreview(null);
+      setMimeType(null);
       onChange("");
       toast.success("File deleted");
-    } catch (err) {
+    } catch {
       toast.error("Failed to delete file");
     } finally {
       setDeleting(false);
@@ -75,10 +79,10 @@ export default function Uploader({ value, onChange }: Uploader) {
 
   const { getInputProps, getRootProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { "image/*": [] },
+    accept: { "image/*": [], "video/*": [] },
     maxFiles: 1,
     multiple: false,
-    maxSize: 5 * 1024 * 1024,
+    maxSize: 5 * 1024 * 1024, //5mb file size, vercel blob allows only 5mb
     onDropRejected: (rej) => {
       if (rej.find((r) => r.errors[0].code === "too-many-files")) {
         toast.error("Too many files selected, max is 1");
@@ -88,6 +92,21 @@ export default function Uploader({ value, onChange }: Uploader) {
       }
     },
   });
+
+  useEffect(() => {
+    if (value) {
+      setPreview(value);
+      const ext = value.split(".").pop()?.toLowerCase();
+      if (["mp4", "mov", "webm"].includes(ext ?? "")) {
+        setMimeType("video/mp4");
+      } else {
+        setMimeType("image/*");
+      }
+    } else {
+      setPreview(null);
+      setMimeType(null);
+    }
+  }, [value]);
 
   return (
     <Card
@@ -108,12 +127,21 @@ export default function Uploader({ value, onChange }: Uploader) {
         </div>
       ) : preview ? (
         <div className="w-full h-full relative">
-          <Image
-            src={preview}
-            alt="Thumbnail Preview"
-            fill
-            className="object-contain object-center"
-          />
+          {mimeType?.startsWith("video/") ? (
+            <video
+              src={preview}
+              controls
+              className="w-full h-full object-contain object-center"
+            />
+          ) : (
+            <Image
+              src={preview}
+              alt="Preview"
+              fill
+              className="object-contain object-center"
+            />
+          )}
+
           <Button
             type="button"
             size="icon"
@@ -143,8 +171,8 @@ export default function Uploader({ value, onChange }: Uploader) {
             </p>
           ) : (
             <p>
-              Drag 'n' <span className="text-primary">drop</span> some files
-              here, or click to select files
+              Drag and <span className="text-primary">drop</span> files here, or
+              click to select
             </p>
           )}
         </CardContent>

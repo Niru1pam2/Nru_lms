@@ -112,7 +112,7 @@ export default function Uploader({ value, onChange }: Uploader) {
     <Card
       {...getRootProps()}
       className={cn(
-        "relative border-2 w-full h-64 overflow-hidden rounded-lg flex items-center justify-center",
+        "relative border-2 w-full h-64 overflow-hidden rounded-lg flex items-center justify-center border-dashed",
         isDragActive
           ? "border-primary bg-primary/10 border-solid"
           : "border-border hover:border-primary"

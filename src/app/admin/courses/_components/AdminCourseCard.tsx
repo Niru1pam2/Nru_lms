@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
   ArrowRight,
@@ -98,6 +99,40 @@ export default function AdminCourseCard({ data }: AdminCourseCardProps) {
         >
           Edit Course <ArrowRight className="size-4" />
         </Link>
+      </CardContent>
+    </Card>
+  );
+}
+
+export function AdminCourseCardSkeleton() {
+  return (
+    <Card className="group py-0 gap-0 relative">
+      {/* Top image placeholder */}
+      <Skeleton className="w-full aspect-video rounded-t-lg bg-gray-500" />
+
+      <CardContent className="p-4 space-y-3">
+        {/* Title placeholder */}
+        <Skeleton className="h-5 w-3/4 rounded-md bg-gray-500" />
+
+        {/* Small description placeholder */}
+        <Skeleton className="h-4 w-full rounded-md bg-gray-500" />
+        <Skeleton className="h-4 w-5/6 rounded-md bg-gray-500" />
+
+        {/* Metadata placeholders */}
+        <div className="flex items-center gap-x-5 mt-4">
+          <div className="flex items-center gap-x-2">
+            <Skeleton className="h-6 w-6 rounded-md bg-gray-500" />
+            <Skeleton className="h-4 w-6 rounded-md bg-gray-500" />
+          </div>
+
+          <div className="flex items-center gap-x-2">
+            <Skeleton className="h-6 w-6 rounded-md bg-gray-500" />
+            <Skeleton className="h-4 w-10 rounded-md bg-gray-500" />
+          </div>
+        </div>
+
+        {/* Button placeholder */}
+        <Skeleton className="h-10 w-full rounded-md mt-4 bg-gray-500" />
       </CardContent>
     </Card>
   );

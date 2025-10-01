@@ -2,7 +2,6 @@
 
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -15,8 +14,8 @@ import { Button } from "@/components/ui/button";
 import { tryCatch } from "@/hooks/try-catch";
 import { Trash2 } from "lucide-react";
 import { useState, useTransition } from "react";
-import { deleteLesson } from "../actions";
 import { toast } from "sonner";
+import { deleteLesson } from "../actions";
 
 export function DeleteLesson({
   chapterId,

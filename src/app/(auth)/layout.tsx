@@ -1,9 +1,11 @@
+"use client";
+
+import logo from "@/assets/icons8-education-100 (1).png";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookAIcon } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import logo from "@/assets/icons8-education-100 (1).png";
-import Image from "next/image";
 
 export default function AuthLayout({
   children,

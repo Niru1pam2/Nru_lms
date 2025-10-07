@@ -94,7 +94,7 @@ export default function AdminCourseCard({ data }: AdminCourseCardProps) {
         </div>
 
         <Link
-          href={`/admin/courses/${data.id}`}
+          href={`/admin/courses/${data.id}/edit`}
           className={cn(buttonVariants(), "w-full mt-4")}
         >
           Edit Course <ArrowRight className="size-4" />

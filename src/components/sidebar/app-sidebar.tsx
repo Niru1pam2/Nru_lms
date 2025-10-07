@@ -43,21 +43,6 @@ const data = {
       url: "/admin/courses",
       icon: IconListDetails,
     },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
   ],
   navClouds: [
     {
@@ -136,7 +121,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <Link href="#">
+              <Link href="/">
                 <Image src={logo} alt="logo" className="size-5" />
                 <span className="text-base font-semibold">NruLMS.</span>
               </Link>

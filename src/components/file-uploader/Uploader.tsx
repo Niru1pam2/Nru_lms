@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { cn } from "@/lib/utils";
 import { Loader2, Trash2 } from "lucide-react";

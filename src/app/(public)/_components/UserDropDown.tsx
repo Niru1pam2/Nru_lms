@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useSignout } from "@/hooks/use-signout";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 interface UserDropDownProps {
   name: string;
@@ -28,8 +27,6 @@ interface UserDropDownProps {
 }
 
 export function UserDropDown({ email, image, name }: UserDropDownProps) {
-  const router = useRouter();
-
   const handleSignOut = useSignout();
 
   return (

@@ -9,7 +9,6 @@ import {
   IconHelp,
   IconSearch,
   IconSettings,
-  IconUsers,
 } from "@tabler/icons-react";
 import * as React from "react";
 

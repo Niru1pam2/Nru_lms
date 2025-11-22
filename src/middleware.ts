@@ -26,7 +26,7 @@ const aj = arcjet({
   key: env.ARCJET_KEY, // Get your site key from https://app.arcjet.com
   rules: [
     detectBot({
-      mode: "LIVE", // will block requests. Use "DRY_RUN" to log only
+      mode: "DRY_RUN", // will block requests. Use "DRY_RUN" to log only
       // Block all bots except the following
       allow: [
         "CATEGORY:SEARCH_ENGINE",
